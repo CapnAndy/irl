@@ -65,6 +65,16 @@ This class extends `BitmapText` but makes the text appear as if it was being typ
 	var myText = new BitmapText("This types out slowly!", new TextFormat() );
 	// Delay before start, and milliseconds per character, respectively:	
 	myText.startAnimation(0, 150);
+	
+### Button
+
+This class simply adds a signal dispatcher to `WSprite` that triggers when pressed.
+
+	var myButton = new Button();
+	myButton.addChild(myBitmap);
+	
+	// clickHandler will be called upon button press
+	myButton.pressed.add(clickHandler);
 
 ### Input
 

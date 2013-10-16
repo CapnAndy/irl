@@ -3,7 +3,7 @@ import flash.events.MouseEvent;
 import msignal.Signal;
 
 /**
- * Basic Button Class.
+ * Basic Button Class, fires a signal any time the element is clicked on.
  * 
  * Requires haxelib msignal
  * 

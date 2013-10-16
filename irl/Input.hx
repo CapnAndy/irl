@@ -1,8 +1,6 @@
 package ;
 import flash.display.InteractiveObject;
-import flash.display.Stage;
 import flash.events.MouseEvent;
-import flash.events.TouchEvent;
 import msignal.Signal;
 
 /**
