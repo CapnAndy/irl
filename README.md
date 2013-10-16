@@ -1,4 +1,4 @@
-# (Internet) RadialLib
+# Interesting Reasonable Library
 
 When making games, I don't use all-in-one game packages or frameworks - I just use a collection of helper functions to make my life a bit easier, sorta similar to FlashPunk. This set of tools has been evolving over the last two years and I think it would do better opened to the world!
 
@@ -65,6 +65,15 @@ This class extends `BitmapText` but makes the text appear as if it was being typ
 	var myText = new BitmapText("This types out slowly!", new TextFormat() );
 	// Delay before start, and milliseconds per character, respectively:	
 	myText.startAnimation(0, 150);
+	
+### SaveData
+
+This class makes saving game data a little bit easier by wrapping the `SharedObject` class with simple `get` and `set` comands.
+
+	SaveData.init("WordWings", "/RadialSaveData/");
+	
+	SaveData.set("score", 1234);
+	SaveData.get("score"); // 1234
 		
 ### Rndm
 
