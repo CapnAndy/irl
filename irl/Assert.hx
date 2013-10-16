@@ -2,7 +2,7 @@ package irl;
 import haxe.CallStack;
 
 /**
- * ...
+ * Basic assertation class to TEST YOUR ASSERTATIONS
  * @author Andy Moore
  */
 
