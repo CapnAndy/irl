@@ -1,18 +1,24 @@
 # (Internet) RadialLib
 
-When making games, I don't use all-in-one game packages or frameworks - I just use a collection of helper functions to make my life a bit easier.  I figured I would share these tools with my friends, since I am no genius programmer and I'm sure these could be improved.
+When making games, I don't use all-in-one game packages or frameworks - I just use a collection of helper functions to make my life a bit easier, sorta similar to FlashPunk.  I figured I would share these tools with my friends - I KNOW these could be improved!
 
 This library is intended to be used with Haxe3, and some classes have dependencies (such as the OpenFL or Actuate libraries), but not all of them.  I try to keep them as unspecific and lightweight as possible.
+
+## Caveat!
+
+I'm not a genius and I have no formal programmer training. To me, it's more important to hack things to "just work" quickly without much of an eye to performance or good design patterns. One of the reasons I'm sharing this library is to hopefully help fix that and make a better world for all of us. Let's work together! Let's make this beautiful and great! Maybe I'll learn to do things /right/ for a change!
 
 ## Installation
 
 The easiest way to install this library is to use the `haxelib` tool from your command line:
 	
-	haxelib git irl
+	haxelib git irl https://github.com/weasello/irl.git
 	
-You will then be prompted for a Git URL, enter the URL for this repository (or a fork of your choice). Eg: `https://github.com/weasello/irl.git`
+You then have to tell your project to use the haxe library, by adding the following to your `application.xml` file:
+
+	<haxelib name="irl" />
 	
-You can also just download this git repo and slam the `irl` folder into your project directory, it should work the same there.
+(You can also just download this git repo and slam the `irl` folder into your project directory, it should work the same there.)
 
 Once installed, just start using some functions! No library initialization is required. Example:
 	
@@ -23,10 +29,6 @@ Then in your code:
 	myFunction() {
 		trace( Rndm.bool() );
 	}
-
-## Caveat!
-
-I'm no genius programmer and often hack things to "just work" without much of an eye to performance or good design patterns. One of the reasons I'm sharing this library is to hopefully help fix that and make a better world for all of us. Let's work together! Let's make this beautiful and great!
 	
 ## Usage
 
@@ -52,6 +54,11 @@ The `Rndm` class is a selection of randomization tools that should work easily a
 	trace( Rndm.lastStaticDiceRoll );
 	
 If no seed is specified (or you set the seed to 0), it will generate one randomly based off the timestamp the next time it needs one.
+
+## Games using RadialLib:
+	
+ - Monster Loves You!, available on Steam/iOS/Android
+ - All games by Radial Games
 
 ## ToDo
 
