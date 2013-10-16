@@ -18,7 +18,7 @@ You then have to tell your project to use the haxe library, by adding the follow
 
 	<haxelib name="irl" />
 	
-(You can also just download this git repo and slam the `irl` folder into your project directory, it should work the same there.)
+(You can also just download this git repo and slam the `irl` folder into your project source directory, it should work the same there.)
 
 Once installed, just start using some functions! No library initialization is required. Example:
 	
@@ -26,13 +26,11 @@ Once installed, just start using some functions! No library initialization is re
 	
 Then in your code:
 	
-	myFunction() {
-		trace( Rndm.bool() );
-	}
+	trace( Rndm.bool() );
 	
 ## Usage
 
-Each class /should/ be documented, so the code-completion in your editor should answer many questions, but I'll put some examples here:
+Each class /should/ be documented, so the code-completion in your editor should answer any of your burning questions. Here's a quick reference guide:
 
 ### Analytics
 
@@ -89,6 +87,20 @@ This is essentially a pre-typed `Map<String, Dynamic>` shortcut -- useful for st
 	var gProp = new GenericProperties();
 	gProp.set("MyVariable", 1234);
 	gProp.get("MyVariable"); // 1234
+	
+### GreyBox
+
+The `GreyBox` extends `WSprite` and just draws itself a nice grey box. Perfect for prototyping.
+
+	addChild( new GreyBox(100, 100) );
+	
+(You can also customize the line thickness and colours with optional instantiation variables)
+
+### GreyCircle
+
+Same as `GreyBox` but draws a circle instead. Useful if you want to spice up your greyboxing.
+
+	addChild( new GreyCircle(100) );
 
 ### Input
 
