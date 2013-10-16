@@ -65,16 +65,19 @@ This class extends `BitmapText` but makes the text appear as if it was being typ
 	var myText = new BitmapText("This types out slowly!", new TextFormat() );
 	// Delay before start, and milliseconds per character, respectively:	
 	myText.startAnimation(0, 150);
-	
-### SaveData
 
-This class makes saving game data a little bit easier by wrapping the `SharedObject` class with simple `get` and `set` comands.
+### Input
 
-	SaveData.init("WordWings", "/RadialSaveData/");
+This class handles some basic input functionality and reports back using Signals. Requires you install the `msignal` library first.
+
+	Input.init(stage);
 	
-	SaveData.set("score", 1234);
-	SaveData.get("score"); // 1234
-		
+	// This triggers a custom function on mouse press:
+	Input.mousePressed.add(myMouseListener);
+	
+	// This returns the current mouse state:
+	Input.mousePressed;
+	
 ### Rndm
 
 The `Rndm` class is a selection of randomization tools that should work easily and nicely, across all Haxe-supported platforms.  Allows for specific seeding and resetting to previous seeds, and includes shortcuts to common utilities.
@@ -95,6 +98,15 @@ The `Rndm` class is a selection of randomization tools that should work easily a
 	trace( Rndm.lastStaticDiceRoll );
 	
 If no seed is specified (or you set the seed to 0), it will generate one randomly based off the timestamp the next time it needs one.
+
+### SaveData
+
+This class makes saving game data a little bit easier by wrapping the `SharedObject` class with simple `get` and `set` comands.
+
+	SaveData.init("WordWings", "/RadialSaveData/");
+	
+	SaveData.set("score", 1234);
+	SaveData.get("score"); // 1234
 
 ## Games using RadialLib:
 	
