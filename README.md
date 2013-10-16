@@ -34,6 +34,16 @@ Then in your code:
 
 Each class /should/ be documented, so the code-completion in your editor should answer many questions, but I'll put some examples here:
 
+### Analytics
+
+The `Analytics` class is intended to work in conjunction with `haxelib haxe-ga`, and is a static wrapper class that just makes submitting google analytics information a bit easier.
+
+	// The path and domain are optional arguments
+	Analytics.init("MyAnalyticsID", "radialgames.com", "/WordWings/");
+	
+	// Once initialized, you can just call a quick reference to record an Analytics pageview:
+	Analytics.pageView("gameStarted");
+		
 ### Rndm
 
 The `Rndm` class is a selection of randomization tools that should work easily and nicely, across all Haxe-supported platforms.  Allows for specific seeding and resetting to previous seeds, and includes shortcuts to common utilities.

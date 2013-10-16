@@ -18,10 +18,6 @@ class Analytics {
 	static var visitor:Visitor;
 	static var prefix:String;
 	
-	public function new() {
-		throw "Cannot make a new Analytics thingy, just call Init. (This is a static class)";
-	}
-	
 	/**
 	 * Initializes Google Analytics tracking.
 	 * @param	accountID	GA account ID.
