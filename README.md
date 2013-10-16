@@ -144,6 +144,12 @@ This class makes saving game data a little bit easier by wrapping the `SharedObj
 	SaveData.set("score", 1234);
 	SaveData.get("score"); // 1234
 
+### Utils
+
+A general utilitarian class that handles several common operations, such as rotating a point, sorting an array, or even just adding commas to large numbers.
+
+(will document more functions here later)
+	
 ## Games using RadialLib:
 	
  - Monster Loves You!, available on Steam/iOS/Android

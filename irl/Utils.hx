@@ -10,14 +10,12 @@ import flash.display.PixelSnapping;
 import flash.display.Sprite;
 
 /**
- * ...
+ * A generic collection of utilities that has to be documented much better.
  * @author Andy Moore
  */
 
 class Utils {
 
-	public function new() {	}
-	
 	#if !windows
 	public static function weakEvent(target:Sprite, type:String, listener:Dynamic->Void):Void {
 			//throw new nme.errors.Error("Weak Events do not work properly in the CPP environment.");
