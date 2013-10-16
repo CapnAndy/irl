@@ -43,6 +43,14 @@ The `Analytics` class is intended to work in conjunction with `haxelib haxe-ga`,
 	
 	// Once initialized, you can just call a quick reference to record an Analytics pageview:
 	Analytics.pageView("gameStarted");
+	
+### Assert
+
+The `Assert` class is designed to replicate assertation behaviour that is available in other languages; it basically does an evaluation check and throws an error on failure. Great for debugging.
+
+	Assert.isTrue(stage != null, "Oh crap, stage doesn't exist");
+	
+As a bonus, the Assert function throws a stacktrace when targeting windows deployment as there is a slight bug in Haxe that prevents this from happening by default.
 		
 ### Rndm
 
