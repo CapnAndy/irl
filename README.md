@@ -51,6 +51,20 @@ The `Assert` class is designed to replicate assertation behaviour that is availa
 	Assert.isTrue(stage != null, "Oh crap, stage doesn't exist");
 	
 As a bonus, the Assert function throws a stacktrace when targeting windows deployment as there is a slight bug in Haxe that prevents this from happening by default.
+
+### BitmapText
+
+This class creates a bitmap image out of a standard TextField object, allowing you to use Filters on GPU-rendered devices.
+
+	addChild( new BitmapText("Hello!", new TextFormat()) );
+	
+### BitmapTextAnimated
+
+This class extends `BitmapText` but makes the text appear as if it was being typed out.
+
+	var myText = new BitmapText("This types out slowly!", new TextFormat() );
+	// Delay before start, and milliseconds per character, respectively:	
+	myText.startAnimation(0, 150);
 		
 ### Rndm
 

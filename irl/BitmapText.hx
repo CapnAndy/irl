@@ -1,4 +1,5 @@
 package irl;
+
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 import flash.display.PixelSnapping;
@@ -13,16 +14,23 @@ import flash.text.TextFormat;
 import flash.text.TextFormatAlign;
 
 /**
- * ...
+ * Creates a bitmap out of a textfield. Solves problems such as using Filters on GPU rendered devices.
  * @author Andy Moore
  */
 class BitmapText extends WSprite {
-	private var textField:TextField;
-	private var textFormat:TextFormat;
-	private var numberText:Float;
-	private var wordWrap:Bool;
-	private var bitmap:Bitmap;
+	var textField:TextField;
+	var textFormat:TextFormat;
+	var numberText:Float;
+	var wordWrap:Bool;
+	var bitmap:Bitmap;
 	
+	/**
+	 * Create a new bitmap image based on a textfield
+	 * @param	text		The text to display.
+	 * @param	format		A standard textformat object. Be sure the font type is embedded.
+	 * @param	?filters	Optional array of filters to apply to the font.
+	 * @param	setWidth	If set, we'll enable word-wrap and extend the textfield vertically instead of horizontally.
+	 */
 	public function new(text:String, format:TextFormat, ?filters:Array<BitmapFilter>, setWidth:Float = 0) {
 		super();
 		textField = new TextField();
@@ -38,6 +46,7 @@ class BitmapText extends WSprite {
 		
 		textField.wordWrap = wordWrap;
 		textField.multiline = true;
+		// Todo: Detect if the font is embedded or not and toggle this smartly.
 		textField.embedFonts = true;
 		textField.defaultTextFormat = textFormat;
 		textField.antiAliasType = AntiAliasType.ADVANCED;
@@ -79,7 +88,7 @@ class BitmapText extends WSprite {
 		return this.numberText;
 	}
 	
-	private function drawBitmap():Void {
+	function drawBitmap() {
 		if (bitmap != null) {
 			removeChild(bitmap);
 			bitmap = null;
@@ -89,6 +98,8 @@ class BitmapText extends WSprite {
 		tempSprite.addChild(textField);
 		
 		// Need the +2 here for the dropshadow-bitmap
+		// But the +2 is a hack.
+		// TODO: Fix clipping of bitmapData when filters are applied!
 		var data:BitmapData = new BitmapData(Std.int(tempSprite.width + 2), Std.int(tempSprite.height), true, 0x000000);
 		bitmap = new Bitmap(data, PixelSnapping.NEVER, true);
 
@@ -100,11 +111,11 @@ class BitmapText extends WSprite {
 		
 		bitmap.bitmapData.draw(tempSprite, m);
 		addChild(bitmap);
-		bitmap.pixelSnapping = PixelSnapping.NEVER;
+		bitmap.pixelSnapping = PixelSnapping.NEVER; // I don't think this works.
 		moveBitmap();
 	}
 	
-	private function moveBitmap():Void {
+	function moveBitmap() {
 		if (textField.autoSize == TextFieldAutoSize.RIGHT) {
 			bitmap.x = 0-bitmap.width;
 		} else if (textField.autoSize == TextFieldAutoSize.CENTER) {

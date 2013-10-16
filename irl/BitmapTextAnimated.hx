@@ -17,6 +17,13 @@ class BitmapTextAnimated extends BitmapText {
 	
 	private var speedPerChar:Float;
 	
+	/**
+	 * Create a new bitmap image based on a textfield
+	 * @param	text		The text to display.
+	 * @param	format		A standard textformat object. Be sure the font type is embedded.
+	 * @param	?filters	Optional array of filters to apply to the font.
+	 * @param	setWidth	If set, we'll enable word-wrap and extend the textfield vertically instead of horizontally.
+	 */
 	public function new(text:String, format:TextFormat, ?filters:Array<BitmapFilter>, ?setWidth:Float) {
 		super(text, format, filters, setWidth);
 		targetText = text;
@@ -37,7 +44,10 @@ class BitmapTextAnimated extends BitmapText {
 		haxe.Timer.delay(actuallyBegin, Math.round(delay*1000));
 	}
 	
-	private function actuallyBegin():Void {
+	/**
+	 * The timer has started after the specified delay
+	 */
+	function actuallyBegin() {
 		if (speedPerChar == 0) {
 			text = targetText;
 			timer = null;
@@ -47,7 +57,11 @@ class BitmapTextAnimated extends BitmapText {
 		}
 	}
 	
-	private function timerTick(e:TimerEvent):Void {
+	/**
+	 * The timer has ticked at the user-specified interval; time to display another character
+	 * @param	e
+	 */
+	function timerTick(e:TimerEvent) {
 		if (text.length == targetText.length) {
 			// All done!
 			timer.stop();
@@ -57,5 +71,17 @@ class BitmapTextAnimated extends BitmapText {
 			var currentLength:Int = text.length;
 			text = targetText.substr(0, currentLength + 1);
 		}
+	}
+	
+	/**
+	 * Removes the text from the stage and stops any running animations.
+	 */
+	public override function removeAndKill() {
+		if (timer != null) {
+			timer.removeEventListener(TimerEvent.TIMER, timerTick);
+			timer.stop();
+			timer = null;
+		}
+		super.removeAndKill();
 	}
 }
