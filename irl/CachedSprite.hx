@@ -6,6 +6,10 @@ import flash.geom.Matrix;
 import flash.geom.Point;
 import flash.geom.Rectangle;
 
+/**
+ * This class is about to go through some overhauls, so ignore!
+ * (Lots of functionality deprecated)
+ */
 class CachedSprite extends WSprite {
 	//Declare a static data cache
 	public var clip:Bitmap;

@@ -1,5 +1,7 @@
 package irl;
 
+// Made by @ChevyRay, not sure how to use it yet
+
 // If you say "Using calc" you can add thigns to integers
 // myVar.rad();
 class Calc

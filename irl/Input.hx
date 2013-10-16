@@ -1,4 +1,4 @@
-package ;
+package irl;
 import flash.display.InteractiveObject;
 import flash.events.MouseEvent;
 import msignal.Signal;

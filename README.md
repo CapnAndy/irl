@@ -75,6 +75,12 @@ This class simply adds a signal dispatcher to `WSprite` that triggers when press
 	
 	// clickHandler will be called upon button press
 	myButton.pressed.add(clickHandler);
+	
+### FPSCounter
+
+A basic `FPSCounter` that displays the number of FPS passed, with optional averaging, and target framerate.
+
+	FPSCounter.init(stage, 30); // Smooths FPS over 30 frames.
 
 ### Input
 
