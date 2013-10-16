@@ -157,10 +157,10 @@ A wrapper for the `Sprite` class that contains a lot of helper functions such as
 
 (will document more details here later)
 	
-## Games using RadialLib:
+## Games using this library:
 	
  - Monster Loves You!, available on Steam/iOS/Android
- - All games by Radial Games
+ - All games by Radial Games! http://www.radialgames.com ! (buy today!)
 
 ## ToDo
 
