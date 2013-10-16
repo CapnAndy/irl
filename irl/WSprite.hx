@@ -154,35 +154,23 @@ class WSprite extends Sprite {
 	 * ========================
 	 */
 	var onStageCallback:Void->Void;
+	/**
+	 * Call a function once this item has been added to the stage.
+	 * @param	cback	Function to callback once on stage.
+	 */
 	public function onStage(cback:Void->Void):Void {
 		onStageCallback = cback;
 		addEventListener(Event.ADDED_TO_STAGE, handleOnStage);
 	}
 	
+	/**
+	 * Private function actually triggers the onstage stuff
+	 * @param	e
+	 */
 	function handleOnStage(e:Event):Void {
 		removeEventListener(Event.ADDED_TO_STAGE, handleOnStage);
 		if (onStageCallback != null) onStageCallback();
 		onStageCallback = null;
-	}
-	
-	var onMouse:Void->Void;
-	public function mouseListen(onEvent:Void->Void):Void {
-		onMouse = onEvent;
-		addEventListener(MouseEvent.MOUSE_DOWN, handleClick);
-	}
-	
-	function handleClick(e:MouseEvent):Void {
-		if (onMouse == null) {
-			// We have no event listener for some reason? Woops. Let's remove the event listener so this doesn't come up again:
-			unMouseListen();
-		} else {
-			onMouse();
-		}
-	}
-	
-	public function unMouseListen():Void {
-		removeEventListener(MouseEvent.MOUSE_DOWN, handleClick);
-		onMouse = null;
 	}
 
 	/* Screen Shake Stuff 
@@ -191,6 +179,11 @@ class WSprite extends Sprite {
 	private var screenShakeOriginalLoc:Point;
 	private var shakeLength:Float;
 	private var shakeIntensity:Float;
+	/**
+	 * Let's shake things up a bit!
+	 * @param	intensity	Intensity largely defines number of pixels to move as a baseline, though this will decay
+	 * @param	duration	How long to shake
+	 */
 	public function shake(intensity:Float, duration:Float = 60):Void {
 		if (shakeLength == 0) {
 			addEventListener(Event.ENTER_FRAME, shakeIt);
@@ -203,7 +196,11 @@ class WSprite extends Sprite {
 		}
 	}
 	
-	private function shakeIt(e:Event):Void {
+	/**
+	 * Private function to handle the shaking.
+	 * @param	e
+	 */
+	function shakeIt(e:Event) {
 		shakeLength -= 1;
 		shakeIntensity = shakeIntensity * 0.98;
 		if (shakeLength <= 0) {
@@ -218,19 +215,31 @@ class WSprite extends Sprite {
 		}
 	}
 	
+	/**
+	 * Cancel the mousebubbling behaviour.
+	 */
 	public function cancelBubble():Void {
-		if (!Math.isNaN(originalScale))
+		if (!Math.isNaN(originalScale)) {
 			mouseOverShrink(null);
+		}
 		removeEventListener(MouseEvent.MOUSE_OVER, mouseOverGrow);
+		removeEventListener(TouchEvent.TOUCH_OVER, mouseOverGrow);
 	}
 	
-	private var scaleAmount:Float = 0;
-	private var overrideTween:Bool;
-	private var originalScale:Float;
+	var scaleAmount:Float = 0;
+	var overrideTween:Bool;
+	var originalScale:Float;
+	/**
+	 * Set this display object to "bubble" on mouseOver.
+	 * @param	scaleAmount		What scale to multiply by (default 120%)
+	 * @param	overrideTween	If we should overwrite any existing motion tweens with this motion
+	 */
 	public function bubbleOnMouseOver(scaleAmount:Float = 1.2, overrideTween:Bool = true):Void {
 		originalScale = Math.NaN;
 		this.overrideTween = overrideTween;
 		this.scaleAmount = scaleAmount;
+		
+		// We need to put TOUCH stuff in too because OpenFL bug.
 		removeEventListener(MouseEvent.MOUSE_OVER, mouseOverGrow);
 		removeEventListener(TouchEvent.TOUCH_OVER, mouseOverGrow);
 		
@@ -239,7 +248,11 @@ class WSprite extends Sprite {
 		addEventListener(MouseEvent.MOUSE_OVER, mouseOverGrow);
 	}
 	
-	private function mouseOverGrow(e:MouseEvent):Void {
+	/**
+	 * Private function that makes the mouseOver bubble grow
+	 * @param	e
+	 */
+	function mouseOverGrow(e:MouseEvent) {
 		removeEventListener(TouchEvent.TOUCH_OVER, mouseOverGrow);
 		removeEventListener(MouseEvent.MOUSE_OVER, mouseOverGrow);
 		removeEventListener(MouseEvent.MOUSE_OUT, mouseOverShrink);
@@ -252,7 +265,11 @@ class WSprite extends Sprite {
 		Actuate.tween(this, 0.2, { scale:originalScale * scaleAmount }, overrideTween);
 	}
 	
-	private function mouseOverShrink(e:MouseEvent):Void {
+	/**
+	 * Private function that makes the mouseOver bubble reverse direction
+	 * @param	e
+	 */
+	function mouseOverShrink(e:MouseEvent) {
 		removeEventListener(MouseEvent.MOUSE_OVER, mouseOverGrow);
 		removeEventListener(MouseEvent.MOUSE_OUT, mouseOverShrink);
 		
@@ -272,12 +289,19 @@ class WSprite extends Sprite {
 		addEventListener(TouchEvent.TOUCH_OVER, mouseOverGrow);
 	}
 	
-	private function mouseOverShrinkComplete():Void {
+	/**
+	 * Private function that handles the completion of the bubble-shrink event
+	 */
+	function mouseOverShrinkComplete() {
 		originalScale = Math.NaN;
 	}
 	
-	private var boundingBoxData:Sprite;
-	public function drawBoundingBox():Void {
+	var boundingBoxData:Sprite;
+	/**
+	 * Draws a bounding box in red around the object. the line traces exactly the interior edge (not exterior).
+	 * @param addLabel	Should we add a little text label while we're at it?
+	 */
+	public function drawBoundingBox(addLabel:Bool = true) {
 		if (boundingBoxData != null) {
 			removeChild(boundingBoxData);
 			boundingBoxData = null;
@@ -286,22 +310,24 @@ class WSprite extends Sprite {
 			boundingBoxData.graphics.lineStyle(1,0xFF0000);
 			boundingBoxData.graphics.drawRect(getBounds(this).left + 1, getBounds(this).top + 1, width - 2, height - 2);
 
-			var format = new TextFormat();
-			format.size = 8;
-			format.color = 0xFFFFFF;
-			var textField = new TextField();
-			textField.defaultTextFormat = format;
-			textField.autoSize = TextFieldAutoSize.LEFT;
-			textField.background = true;
-			textField.backgroundColor = 0xFF0000;
-			textField.text = "x" + left + " y" + top + " w" + width + " h" + height;
-			
-			if (textField.width > boundingBoxData.width) textField.width = boundingBoxData.width;
-			if (textField.height > boundingBoxData.height) textField.height = boundingBoxData.height;
-			textField.x = boundingBoxData.getBounds(boundingBoxData).left + 1;
-			textField.y = boundingBoxData.getBounds(boundingBoxData).top + 1;
-			boundingBoxData.addChild(textField);
-			//addChild(texty);
+			if (addLabel) {
+				// And let's fit the dimensions into a little red label we'll put onto the box:
+				var format = new TextFormat();
+				format.size = 8;
+				format.color = 0xFFFFFF;
+				var textField = new TextField();
+				textField.defaultTextFormat = format;
+				textField.autoSize = TextFieldAutoSize.LEFT;
+				textField.background = true;
+				textField.backgroundColor = 0xFF0000;
+				textField.text = "x" + left + " y" + top + " w" + width + " h" + height;
+				
+				if (textField.width > boundingBoxData.width) textField.width = boundingBoxData.width;
+				if (textField.height > boundingBoxData.height) textField.height = boundingBoxData.height;
+				textField.x = boundingBoxData.getBounds(boundingBoxData).left + 1;
+				textField.y = boundingBoxData.getBounds(boundingBoxData).top + 1;
+				boundingBoxData.addChild(textField);
+			}
 			addChild(boundingBoxData);
 		}
 	}
@@ -309,31 +335,41 @@ class WSprite extends Sprite {
 	/* CleanUp
 	 * ==================
 	 */	
-	private function kill():Void {
-		// In case this was never added to stage:
+	
+	/**
+	 * Removes all references from this class. Suggested you use RemoveAndKill instead though, it's public.
+	 */
+	function kill() {
 		removeEventListener(TouchEvent.TOUCH_OVER, mouseOverGrow);
 		removeEventListener(TouchEvent.TOUCH_OUT, mouseOverShrink);
 		removeEventListener(MouseEvent.MOUSE_OVER, mouseOverGrow);
 		removeEventListener(MouseEvent.MOUSE_OUT, mouseOverShrink);
 		removeEventListener(Event.ADDED_TO_STAGE, handleOnStage);
-		onStageCallback = null;
 		removeEventListener(Event.ENTER_FRAME, shakeIt);
+		onStageCallback = null;
+
+		// Let's remove all sub-children of this. Probably unnecessary but might as well be safe:
+		while (this.numChildren > 0) {
+			// TODO: Investigate if we can just ask for a removeAndKill for all subchildren and call that?
+			removeChildAt(0);
+		}
 		
-		while (this.numChildren > 0) removeChildAt(0);
-		unMouseListen();
-		handleOnStage(null);
-		
+		// kill that bounding box
 		if (boundingBoxData != null) {
 			if (boundingBoxData.parent != null)
 				boundingBoxData.parent.removeChild(boundingBoxData);
-		}
-		// add field reflect null
+		}		
 	}
 	
-	public function removeAndKill():Void {
+	/**
+	 * Totally expecting you to call this anytime you want to remove the Sprite in your cleanup routines. Feel free to extend!
+	 */
+	public function removeAndKill() {
+		// Let's remove this from it's parent:
 		if (this.parent != null) {
 			this.parent.removeChild(this);
 		}
+		// And kill everything else.
 		kill();
 	}
 	

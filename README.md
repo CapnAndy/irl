@@ -1,4 +1,5 @@
-# Iguess a Reasonable Library?
+# IRL:
+#### A game development library you can use IRL
 
 When making games, I don't use all-in-one game packages or frameworks - I just use a collection of helper functions to make my life a bit easier, sorta similar to FlashPunk. This set of tools has been evolving over the last two years and I think it would do better opened to the world!
 

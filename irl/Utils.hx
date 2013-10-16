@@ -16,16 +16,37 @@ import flash.display.Sprite;
 
 class Utils {
 
-	#if !windows
-	public static function weakEvent(target:Sprite, type:String, listener:Dynamic->Void):Void {
-			//throw new nme.errors.Error("Weak Events do not work properly in the CPP environment.");
+	/**
+	 * Creates a weak event listener with a warning based on targets.
+	 * @param	target	Standard event listener target
+	 * @param	type	Event name
+	 * @param	listener	Target function upon execution
+	 */
+	public static function weakEvent(target:DisplayObject, type:String, listener:Dynamic->Void) {
+		#if windows
+			trace("WARNING: Weak Events might garbage-collect instantly in the CPP environment.";
+		#end
 		target.addEventListener(type, listener, false, 0, true);
 	}
-	#end
 	
-	public static function toRad(i:Float):Float { return i * Math.PI/180; }
+	/**
+	 * Convert degrees to radians
+	 * @param	i
+	 * @return
+	 */
+	public static function toRad(i:Float):Float { return i * Math.PI / 180; }
+	/**
+	 * Convert radians to degrees
+	 * @param	i
+	 * @return
+	 */
 	public static function toDeg(i:Float):Float { return i * 180 / Math.PI; }
 
+	/**
+	 * Takes a value and normalizes it to a range of -180 to 180 (Flash's rotation range)
+	 * @param	input
+	 * @return
+	 */
 	public static function oneEighty(input:Float):Float {
 		while (input > 180 || input < -180) {
 			if (input > 180) input -= 360;
@@ -34,6 +55,12 @@ class Utils {
 		return input;
 	}
 	
+	/**
+	 * Rotates a point by a given number of radians
+	 * @param	p	The point to rotate
+	 * @param	rad	The number of radians to rotate the point by
+	 * @return
+	 */
 	public static function rotate(p:Point, rad:Float):Point {
 		//var hyp:Number = Point.distance(new Point(0,0), p);
 		var newP:Point = new Point(0,0);
@@ -41,7 +68,13 @@ class Utils {
 		newP.y = p.y*Math.cos(rad) + p.x*Math.sin(rad);
 		return newP;
 	}
-		
+
+	/**
+	 * Searches an array for a particular element
+	 * @param	needle	The item to search for
+	 * @param	haystack	The space to search for the item
+	 * @return
+	 */
 	public static function inSet(needle:Dynamic, haystack:Array<Dynamic>):Bool {
 		for (item in haystack) {
 			if (needle == item) return true;
@@ -49,6 +82,12 @@ class Utils {
 		return false;
 	}
 
+	/**
+	 * Removes all occurances of an item from an array
+	 * @param	needle	Item to search for
+	 * @param	haystack	Array to search through
+	 * @return
+	 */
 	public static function removeFromSet(needle:Dynamic, haystack:Array<Dynamic>):Array<Dynamic> {
 		var newHaystack = new Array<Dynamic>();
 		for (item in haystack) {
@@ -57,6 +96,12 @@ class Utils {
 		return newHaystack;
 	}
 	
+	/**
+	 * Sorts an array by uhmmm... magic?
+	 * @param	array
+	 * @param	sortBy
+	 * @param	ascending
+	 */
 	public static function sortArray(array:Array<Dynamic>, sortBy:String, ascending:Bool = true):Void {
 		array.sort(function(a:Dynamic, b:Dynamic):Int {
 			if (a.fetch(sortBy) == b.fetch(sortBy)) {
@@ -77,7 +122,13 @@ class Utils {
 		});
 	}
 	
-	public static function implode(glue:String="", array:Array<String>):String {
+	/**
+	 * Converts an array to a string
+	 * @param	glue	What to insert between each array element
+	 * @param	array	The array to convert
+	 * @return
+	 */
+	public static function implode(glue:String, array:Array<String>):String {
 		var temp:String = "";
 		for (i in 0...array.length) {
 			if (i != 0) temp = temp + glue;
@@ -86,14 +137,21 @@ class Utils {
 		return temp;
 	}
 
+	/**
+	 * Shortcut method that fetches a bitmap from OpenFLs Assets manager
+	 * @param	assetName
+	 * @return
+	 */
 	public static function bitmap(assetName:String):Bitmap {
 		return new Bitmap(Assets.getBitmapData(assetName), PixelSnapping.NEVER, true);
 	}
-	
-	//public static function bitmap(assetName:String):Bitmap {
-		//return new Bitmap(Rasset.getBitmapData(assetName), PixelSnapping.AUTO, true);
-	//}
-	
+
+	/**
+	 * Not even sure if this works properly.
+	 * @param	input
+	 * @param	colourChecker
+	 * @return
+	 */
 	public static function trimTransparency(input:BitmapData, colourChecker:Int = 0x00FF00):Bitmap {
         //Keep a copy of the original
         var original:Bitmap = new Bitmap(input, PixelSnapping.AUTO, true);
@@ -116,6 +174,11 @@ class Utils {
         return returnedBitmap;
     }
 	
+	/**
+	 * Add commas to a number, eg: 100000 = 100,000
+	 * @param	number
+	 * @return
+	 */
 	public static function addCommasToNumber(number:Float):String {
 		var result:String = "";
 
