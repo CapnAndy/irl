@@ -81,6 +81,14 @@ This class simply adds a signal dispatcher to `WSprite` that triggers when press
 A basic `FPSCounter` that displays the number of FPS passed, with optional averaging, and target framerate.
 
 	FPSCounter.init(stage, 30); // Smooths FPS over 30 frames.
+	
+### GenericProperties
+
+This is essentially a pre-typed `Map<String, Dynamic>` shortcut -- useful for storing whatever data you want with string references.
+
+	var gProp = new GenericProperties();
+	gProp.set("MyVariable", 1234);
+	gProp.get("MyVariable"); // 1234
 
 ### Input
 
