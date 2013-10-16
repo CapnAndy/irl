@@ -1,8 +1,8 @@
 # (Internet) RadialLib
 
-When making games, I don't use all-in-one game packages or frameworks - I just use a collection of helper functions to make my life a bit easier, sorta similar to FlashPunk.  I figured I would share these tools with my friends - I KNOW these could be improved!
+When making games, I don't use all-in-one game packages or frameworks - I just use a collection of helper functions to make my life a bit easier, sorta similar to FlashPunk. This set of tools has been evolving over the last two years and I think it would do better opened to the world!
 
-This library is intended to be used with Haxe3, and some classes have dependencies (such as the OpenFL or Actuate libraries), but not all of them.  I try to keep them as unspecific and lightweight as possible.
+This library is intended to be used with Haxe3, and some classes have dependencies (such as the OpenFL or Actuate libraries), but not all of them.  I try to keep them as unspecific and lightweight as possible.  Just use the classes you want, and ignore the rest; they won't compile into your project.
 
 ## Caveat!
 
