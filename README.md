@@ -1,4 +1,4 @@
-# Interesting Reasonable Library
+# Iguess a Reasonable Library?
 
 When making games, I don't use all-in-one game packages or frameworks - I just use a collection of helper functions to make my life a bit easier, sorta similar to FlashPunk. This set of tools has been evolving over the last two years and I think it would do better opened to the world!
 
@@ -142,5 +142,6 @@ This class makes saving game data a little bit easier by wrapping the `SharedObj
  - Add back in the AdobeAIR Specific libraries for SteamWorks, GameCenter, and GoogleGames.
  - Add to haxelib for easier install (once it's brushed up a bit more)
  - Document all the things.
+ - Settle on a proper acronym definition to title the project.
 
 http://www.radialgames.com
