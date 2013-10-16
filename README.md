@@ -2,7 +2,7 @@
 
 When making games, I don't use all-in-one game packages or frameworks - I just use a collection of helper functions to make my life a bit easier, sorta similar to FlashPunk. This set of tools has been evolving over the last two years and I think it would do better opened to the world!
 
-This library is intended to be used with Haxe3, and some classes have dependencies (such as the OpenFL or Actuate libraries), but not all of them.  I try to keep them as unspecific and lightweight as possible.  Just use the classes you want, and ignore the rest; they won't compile into your project.
+This library is intended to be used with Haxe3 & OpenFL, and some classes have dependencies (such as the Actuate library), but not all of them.  I try to keep them as unspecific and lightweight as possible.  Just use the classes you want, and ignore the rest; they won't compile into your project.
 
 ## Caveat!
 
@@ -148,7 +148,13 @@ This class makes saving game data a little bit easier by wrapping the `SharedObj
 
 A general utilitarian class that handles several common operations, such as rotating a point, sorting an array, or even just adding commas to large numbers.
 
-(will document more functions here later)
+(will document more details here later)
+
+### WSprite
+
+A wrapper for the `Sprite` class that contains a lot of helper functions such as `.top` and `.bottom` for determining pixel positions, screenshake functions, and drawing of bounding boxes.
+
+(will document more details here later)
 	
 ## Games using RadialLib:
 	

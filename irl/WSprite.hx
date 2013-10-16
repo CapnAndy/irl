@@ -11,11 +11,16 @@ import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
 import motion.Actuate;
 
+/**
+ * Sprite replacement class that contains a lot of helpers. More docs to come
+ */
 class WSprite extends Sprite {
 	
 	/* Helpers
 	 * ==================
 	 */
+	
+	// TODO: Can we make these work without parents? Does that even make sense?
 	public var top(get, set):Float; 
 	private function get_top():Float {
 		if (this.parent == null) {
