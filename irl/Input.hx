@@ -1,5 +1,6 @@
 package irl;
 import flash.display.InteractiveObject;
+import flash.events.Event;
 import flash.events.MouseEvent;
 import msignal.Signal;
 
@@ -12,6 +13,8 @@ class Input {
 	
 	public static var mousePressed:Signal1<MouseEvent>;
 	public static var mouseReleased:Signal1<MouseEvent>;
+	
+	public static var resized:Signal0;
 	
 	public static var target:InteractiveObject;
 	
@@ -29,10 +32,16 @@ class Input {
 		// Add the event listeners
 		target.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
 		target.addEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
+		target.addEventListener(Event.RESIZE, resizeHandler);
 		
 		// And let's initialize some signals so other things can listen in on these events:
 		mousePressed = new Signal1<MouseEvent>();
-		mouseReleased = new Signal1<MouseEvent>();		
+		mouseReleased = new Signal1<MouseEvent>();
+		resized = new Signal0();
+	}
+	
+	static function resizeHandler(e:Event):Void {
+		resized.dispatch();
 	}
 	
 	static function mouseDownHandler(e:MouseEvent):Void {
@@ -51,8 +60,11 @@ class Input {
 	public static function turnItAllOff() {
 		mousePressed.removeAll();
 		mouseReleased.removeAll();
+		resized.removeAll();
 		mousePressed = null;
 		mouseReleased = null;
+		resized = null;
+		target.removeEventListener(Event.RESIZE, resizeHandler);
 		target.removeEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
 		target.removeEventListener(MouseEvent.MOUSE_UP, mouseUpHandler);
 		target = null;
