@@ -49,7 +49,7 @@ The `Assert` class is designed to replicate assertation behaviour that is availa
 
 	Assert.isTrue(stage != null, "Oh crap, stage doesn't exist");
 	
-As a bonus, the Assert function throws a stacktrace when targeting windows deployment as there is a slight bug in Haxe that prevents this from happening by default.
+The assertion uses macros to disable itself when not a debug build, and can also be added to other classes via the `using` keyword.
 
 ### BitmapText
 

@@ -1,41 +1,30 @@
 package irl;
-import haxe.CallStack;
+import haxe.macro.Context;
+import haxe.macro.Expr;
 
 /**
  * Basic assertation class to TEST YOUR ASSERTATIONS, shocking!
+ * Other classes can also use "using irl.Assert" to allow for things like yourClass.isTrue(blah);
+ * 
+ * This edition heavily influenced by deltaluca @ https://github.com/deltaluca/goodies
+ * 
  * @author Andy Moore
  */
 
 class Assert {
 
 	/**
-	 * Throws an (optionally: customized) error message if the expression is not true
+	 * Throws an (optionally: customized) error message if the expression is not true. Disabled if debug compilation.
 	 * @param	expression	Put your test here. Eg: stage != null
 	 * @param	message		An optional custom error message. Eg: "Stage doesn't exist"
 	 */
-	public static function isTrue(expression:Bool, message:String = "") {
-		if (!expression) {
-			if (message == "" || message == null) {
-				message = "[Assertion failed] - this expression must be true";
-            }
-			#if windows
-				// Getting a proper stacktrace in CPP builds doesn't always work properly. This can be removed
-				// Once the bugfix is done in Haxe.
-				var stack:Array<StackItem> = CallStack.callStack();
-				message += "\n";
-				for (line in stack) {
-					message += line + "\n";
-				}
-			#end
-			throw message;
+    macro public static function isTrue(expression:Expr, message:String = "Assertation Error") {
+		if (Context.defined("debug")) {
+			var pos = Context.currentPos();
+			var print = (new haxe.macro.Printer()).printExpr(expression);
+			return macro { if (!($expression)) throw '${${message}}: ${$v{pos}} : ${$v{print}}'; };
+		} else {
+			return macro { };
 		}
-	}
-	
-	/**
-	 * Shortcut function to quickly terminate if you don't have an easy assertation to test against
-	 * @param	message		Optional custom error message
-	 */
-	public static function noRun(message:String = "") {
-		isTrue(false, message);
-	}
+    }
 }
