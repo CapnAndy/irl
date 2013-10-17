@@ -13,7 +13,7 @@ I'm not a genius and I have no formal programmer training. To me, it's more impo
 
 The easiest way to install this library is to use the `haxelib` tool from your command line:
 	
-	haxelib git irl https://github.com/weasello/irl.git
+	haxelib git irl https://github.com/CapnAndy/irl.git
 	
 You then have to tell your project to use the haxe library, by adding the following to your `application.xml` file:
 

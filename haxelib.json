@@ -1,10 +1,10 @@
 {
 	"name": "irl",
-	"url": "https://github.com/weasello/irl",
+	"url": "https://github.com/CapnAndy/irl",
 	"license": "GPL",
-	"contributors":["Capn_Andy"],
+	"contributors":["CapnAndy"],
 	"tags": ["cross"],
-	"description": "Generic game library tool things.",
-	"version": "0.0.1",
-	"releasenote": "This is so far unreleased on haxelib. This file is just for kicks."
+	"description": "Generic game library tool things in a nice and small package.",
+	"version": "0.0.2",
+	"releasenote": "First release."
 }
