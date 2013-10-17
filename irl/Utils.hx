@@ -99,10 +99,35 @@ class Utils {
 	/**
 	 * Sorts an array by uhmmm... magic?
 	 * @param	array
+	 * @param	ascending
+	 */
+	public static function sortArray(array:Array<Dynamic>, ascending:Bool = true):Void {
+		array.sort(function(a:Dynamic, b:Dynamic):Int {
+			if (a == b) {
+				return 0;
+			}
+			else if (a > b) {
+				if (ascending) return 1;
+				else return -1;
+			}
+			else if (a < b) {
+				if (ascending) return -1;
+				else return 1;
+			} 
+			else {
+				throw "Couldn't run sortArray because AAAAAAAGRHGHH";
+				return 1;
+			}
+		});
+	}
+
+	/**
+	 * Sorts an array by uhmmm... magic?
+	 * @param	array
 	 * @param	sortBy
 	 * @param	ascending
 	 */
-	public static function sortArray(array:Array<Dynamic>, sortBy:String, ascending:Bool = true):Void {
+	public static function sort2DArray(array:Array<Dynamic>, sortBy:String, ascending:Bool = true):Void {
 		array.sort(function(a:Dynamic, b:Dynamic):Int {
 			if (a.fetch(sortBy) == b.fetch(sortBy)) {
 				return 0;
