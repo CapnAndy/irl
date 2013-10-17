@@ -142,35 +142,37 @@ class WSprite extends Sprite {
 		return to;
 	}
 	
+	/**
+	 * Requires irl.Input to be initialized first.
+	 */
 	public function new() {
+		super();
 		screenShakeOriginalLoc = new Point();
 		shakeLength = 0;
 		shakeIntensity = 0;
-		originalScale = Math.NaN;		
-		super();
+		originalScale = Math.NaN;
+		Input.resized.add(orient);
+		addEventListener(Event.ADDED_TO_STAGE, handleOnStage);
 	}
 	
 	/* Misc commonly-used utils
 	 * ========================
 	 */
-	var onStageCallback:Void->Void;
-	/**
-	 * Call a function once this item has been added to the stage.
-	 * @param	cback	Function to callback once on stage.
-	 */
-	public function onStage(cback:Void->Void):Void {
-		onStageCallback = cback;
-		addEventListener(Event.ADDED_TO_STAGE, handleOnStage);
-	}
 	
+	/**
+	 * Called anytime an orientation change event is dispatched, and the first time the element is added to the stage
+	 */
+	function orient() {
+		// To be overridden
+	}
+	 
 	/**
 	 * Private function actually triggers the onstage stuff
 	 * @param	e
 	 */
 	function handleOnStage(e:Event):Void {
 		removeEventListener(Event.ADDED_TO_STAGE, handleOnStage);
-		if (onStageCallback != null) onStageCallback();
-		onStageCallback = null;
+		orient();
 	}
 
 	/* Screen Shake Stuff 
@@ -344,10 +346,11 @@ class WSprite extends Sprite {
 		removeEventListener(TouchEvent.TOUCH_OUT, mouseOverShrink);
 		removeEventListener(MouseEvent.MOUSE_OVER, mouseOverGrow);
 		removeEventListener(MouseEvent.MOUSE_OUT, mouseOverShrink);
-		removeEventListener(Event.ADDED_TO_STAGE, handleOnStage);
+		removeEventListener(Event.ADDED_TO_STAGE, handleOnStage); // In case the item was never added to stage.
 		removeEventListener(Event.ENTER_FRAME, shakeIt);
-		onStageCallback = null;
 
+		Input.resized.remove(orient);
+		
 		// Let's remove all sub-children of this. Probably unnecessary but might as well be safe:
 		while (this.numChildren > 0) {
 			// TODO: Investigate if we can just ask for a removeAndKill for all subchildren and call that?
