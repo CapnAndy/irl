@@ -143,7 +143,7 @@ class WSprite extends Sprite {
 	}
 	
 	/**
-	 * Requires irl.Input to be initialized first.
+	 * Requires irl.Input to be initialized first if we're going to use orientation events.
 	 */
 	public function new() {
 		super();
@@ -151,7 +151,7 @@ class WSprite extends Sprite {
 		shakeLength = 0;
 		shakeIntensity = 0;
 		originalScale = Math.NaN;
-		Input.resized.add(orient);
+		if (Input.resized != null) Input.resized.add(orient);
 		addEventListener(Event.ADDED_TO_STAGE, handleOnStage);
 	}
 	
@@ -349,7 +349,7 @@ class WSprite extends Sprite {
 		removeEventListener(Event.ADDED_TO_STAGE, handleOnStage); // In case the item was never added to stage.
 		removeEventListener(Event.ENTER_FRAME, shakeIt);
 
-		Input.resized.remove(orient);
+		if (Input.resized != null) Input.resized.remove(orient);
 		
 		// Let's remove all sub-children of this. Probably unnecessary but might as well be safe:
 		while (this.numChildren > 0) {
