@@ -13,6 +13,10 @@ I'm not a genius and I have no formal programmer training. To me, it's more impo
 
 The easiest way to install this library is to use the `haxelib` tool from your command line:
 	
+	haxelib install irl
+	
+Alternatively, you can install direct from Git if you want the bleeding-edge version:
+	
 	haxelib git irl https://github.com/CapnAndy/irl.git
 	
 You then have to tell your project to use the haxe library, by adding the following to your `application.xml` file:
@@ -165,7 +169,6 @@ A wrapper for the `Sprite` class that contains a lot of helper functions such as
 ## ToDo
 
  - Add back in the AdobeAIR Specific libraries for SteamWorks, GameCenter, and GoogleGames.
- - Add to haxelib for easier install (once it's brushed up a bit more)
  - Document all the things.
  - Settle on a proper acronym definition to title the project.
 
