@@ -147,7 +147,6 @@ class WSprite extends Sprite {
 	 */
 	public function new() {
 		super();
-		screenShakeOriginalLoc = new Point();
 		shakeLength = 0;
 		shakeIntensity = 0;
 		originalScale = Math.NaN;
@@ -188,6 +187,7 @@ class WSprite extends Sprite {
 	 */
 	public function shake(intensity:Float, duration:Float = 60):Void {
 		if (shakeLength == 0) {
+			removeEventListener(Event.ENTER_FRAME, shakeIt);
 			addEventListener(Event.ENTER_FRAME, shakeIt);
 			screenShakeOriginalLoc = this.location;
 			shakeLength = duration;
@@ -349,6 +349,8 @@ class WSprite extends Sprite {
 		removeEventListener(Event.ADDED_TO_STAGE, handleOnStage); // In case the item was never added to stage.
 		removeEventListener(Event.ENTER_FRAME, shakeIt);
 
+		screenShakeOriginalLoc = null;
+		
 		if (Input.resized != null) Input.resized.remove(orient);
 		
 		// Let's remove all sub-children of this. Probably unnecessary but might as well be safe:
@@ -371,11 +373,14 @@ class WSprite extends Sprite {
 	 */
 	public function removeAndKill() {
 		// Let's remove this from it's parent:
+		Actuate.tween(this, 0.1, { }, true); // Workaround actuate bug
+		// TODO: Remove
+		Actuate.stop(this);
 		if (this.parent != null) {
 			this.parent.removeChild(this);
 		}
 		// And kill everything else.
-		kill();
+		this.kill();
 	}
 	
 }

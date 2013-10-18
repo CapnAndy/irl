@@ -128,8 +128,8 @@ class BitmapText extends WSprite {
 			if (bitmap.parent != null) {
 				bitmap.parent.removeChild(bitmap);
 			}
-			bitmap = null;
 		}
+		bitmap = null;
 		textField = null;
 		textFormat = null;
 		super.removeAndKill();
