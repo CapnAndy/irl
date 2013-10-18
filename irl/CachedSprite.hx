@@ -49,4 +49,14 @@ class CachedSprite extends WSprite {
 	public static function setGlobalScaleDefault(to:Float):Void {
 		globalScaleDefault = to;
 	}
+	
+	public override function removeAndKill() {
+		if (clip != null) {
+			if (clip.parent != null) {
+				removeChild(clip);
+			}
+			clip = null;
+		}
+		super.removeAndKill();
+	}
 }

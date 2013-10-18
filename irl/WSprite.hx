@@ -359,8 +359,10 @@ class WSprite extends Sprite {
 		
 		// kill that bounding box
 		if (boundingBoxData != null) {
-			if (boundingBoxData.parent != null)
+			if (boundingBoxData.parent != null) {
 				boundingBoxData.parent.removeChild(boundingBoxData);
+			}
+			boundingBoxData = null;
 		}		
 	}
 	

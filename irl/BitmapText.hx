@@ -122,4 +122,16 @@ class BitmapText extends WSprite {
 			bitmap.x = 0 - (bitmap.width / 2);
 		}
 	}
+	
+	override function removeAndKill() {
+		if (bitmap != null) {
+			if (bitmap.parent != null) {
+				bitmap.parent.removeChild(bitmap);
+			}
+			bitmap = null;
+		}
+		textField = null;
+		textFormat = null;
+		super.removeAndKill();
+	}
 }

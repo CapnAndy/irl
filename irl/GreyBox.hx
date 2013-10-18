@@ -1,4 +1,5 @@
 package irl;
+import flash.display.Sprite;
 
 class GreyBox extends WSprite {
 	
@@ -13,12 +14,11 @@ class GreyBox extends WSprite {
 	 */
 	public function new(width:Float, height:Float, fillColor:UInt = 0x555555, lineThickness:Float = 2, lineColor:UInt = 0x444444) {
 		super();
-		var tempSprite:WSprite = new WSprite();
+		var tempSprite:Sprite = new Sprite();
 		tempSprite.graphics.lineStyle(lineThickness,lineColor);
 		tempSprite.graphics.beginFill(fillColor);
 		tempSprite.graphics.drawRect(0,0,width,height);
 		tempSprite.graphics.endFill();
 		addChild(tempSprite);
 	}
-	
 }
