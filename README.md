@@ -140,6 +140,12 @@ The `Rndm` class is a selection of randomization tools that should work easily a
 	
 If no seed is specified (or you set the seed to 0), it will generate one randomly based off the timestamp the next time it needs one.
 
+In case you need a one-off deterministic result from the class, you can specific one-time-use seed like so:
+	
+	Rndm.useForNextSeedOnly = 12345.67890;
+	Rndm.integer(0, 100); // Always returns the same result based on the above seed
+	Rndm.integer(0, 100); // Reverts to standard random seed generation
+
 ### SaveData
 
 This class makes saving game data a little bit easier by wrapping the `SharedObject` class with simple `get` and `set` comands.
