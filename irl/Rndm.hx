@@ -181,8 +181,17 @@ class Rndm {
 		return _currentSeed;
 	}
 	
+	public static var useForNextSeedOnly:Float = 0;
 	public static function random():Float {
-		return (_currentSeed = (currentSeed * 16807) % 2147483647)/0x7FFFFFFF+0.000000000233;
+		if (useForNextSeedOnly != 0) {
+			// This allows us to generate just a signal number in a sequence from a given seed.
+			var temp = useForNextSeedOnly;
+			useForNextSeedOnly = 0;
+			return ((temp * 16807) % 2147483647) / 0x7FFFFFFF + 0.000000000233;
+		} else {
+			// Standard random number generation.
+			return (_currentSeed = (currentSeed * 16807) % 2147483647) / 0x7FFFFFFF + 0.000000000233;
+		}
 	}
 	
 	/**
