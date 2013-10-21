@@ -150,13 +150,52 @@ class WSprite extends Sprite {
 		shakeLength = 0;
 		shakeIntensity = 0;
 		originalScale = Math.NaN;
-		if (Input.resized != null) Input.resized.add(orient);
-		addEventListener(Event.ADDED_TO_STAGE, handleOnStage);
 	}
 	
-	/* Misc commonly-used utils
-	 * ========================
+	/**
+	 * Triggers orient() when Event.ADDED_TO_STAGE is called.
 	 */
+	public var orientOnStage(get, set):Bool;
+	function get_orientOnStage():Bool {
+		return _orientOnStage;
+	}
+	function set_orientOnStage(to:Bool):Bool {
+		if (to) {
+			if (_orientOnStage == false) {
+				addEventListener(Event.ADDED_TO_STAGE, handleOnStage);
+			} else {
+				// We've already set this. no need to act.
+			}
+		} else {
+			removeEventListener(Event.ADDED_TO_STAGE, handleOnStage); // Remove first, just in case it was doubly set
+		}
+		_orientOnStage = to;
+		return to;
+	}
+	var _orientOnStage:Bool = false;
+	
+	/**
+	 * Triggers orient() when Event.resize is triggered.
+	 */
+	public var orientOnResize(get, set):Bool;
+	function get_orientOnResize():Bool {
+		return _orientOnResize;
+	}
+	function set_orientOnResize(to:Bool):Bool {
+		if (to) {
+			if (_orientOnResize == false) {
+				if (Input.resized == null) throw "irl.Input not initialized";
+				Input.resized.add(orient);
+			} else {
+				// We've already set this. no need to act.
+			}
+		} else {
+			Input.resized.remove(orient);
+		}
+		_orientOnResize = to;
+		return to;
+	}
+	var _orientOnResize:Bool = false;
 	
 	/**
 	 * Called anytime an orientation change event is dispatched, and the first time the element is added to the stage
@@ -346,9 +385,9 @@ class WSprite extends Sprite {
 		removeEventListener(TouchEvent.TOUCH_OUT, mouseOverShrink);
 		removeEventListener(MouseEvent.MOUSE_OVER, mouseOverGrow);
 		removeEventListener(MouseEvent.MOUSE_OUT, mouseOverShrink);
-		removeEventListener(Event.ADDED_TO_STAGE, handleOnStage); // In case the item was never added to stage.
 		removeEventListener(Event.ENTER_FRAME, shakeIt);
 
+		orientOnStage = false; // will remove event listeners for added_to_stage
 		screenShakeOriginalLoc = null;
 		
 		if (Input.resized != null) Input.resized.remove(orient);
