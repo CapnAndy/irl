@@ -5,6 +5,6 @@
 	"contributors":["CapnAndy"],
 	"tags": ["cross"],
 	"description": "Generic game library tool things in a nice and small package.",
-	"version": "0.2.2",
-	"releasenote": "Bugfixes and small functionality changes; see github for details."
+	"version": "0.2.3",
+	"releasenote": "Minor changes; see github for details."
 }
