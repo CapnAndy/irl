@@ -9,6 +9,7 @@ import flash.geom.Rectangle;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
+import haxe.macro.Expr.FunctionArg;
 import motion.Actuate;
 
 /**
@@ -20,14 +21,14 @@ class WSprite extends Sprite {
 	 * ==================
 	 */
 	
-	// TODO: Can we make these work without parents? Does that even make sense?
 	public var top(get, set):Float; 
 	private function get_top():Float {
 		if (this.parent == null) {
-			trace("Warning: tried to get .top without parent");
-			return 0;
-		}		
-		return this.getBounds(parent).top;
+			trace("Warning: tried to get .top without parent. Scale discarded.");
+			return this.getBounds(this).top;
+		} else {
+			return this.getBounds(parent).top;
+		}
 	}
 	private function set_top(to:Float):Float {
 		this.y += to - top;
@@ -38,10 +39,11 @@ class WSprite extends Sprite {
 	public var bottom(get, set):Float; 
 	private function get_bottom():Float {
 		if (this.parent == null) {
-			trace("Warning: tried to get .bottom without parent");
-			return 0;
+			trace("Warning: tried to get .bottom without parent. Scale discarded.");
+			return this.getBounds(this).bottom;
+		} else {
+			return this.getBounds(parent).bottom;
 		}
-		return this.getBounds(parent).bottom;
 	}
 	private function set_bottom(to:Float):Float {
 		this.y += to - bottom;
@@ -52,10 +54,11 @@ class WSprite extends Sprite {
 	public var left(get, set):Float; 
 	private function get_left():Float {
 		if (this.parent == null) {
-			trace("Warning: tried to get .left without parent");
-			return 0;
+			trace("Warning: tried to get .left without parent. Scale discarded.");
+			return this.getBounds(this).left;
+		} else {
+			return this.getBounds(parent).left;
 		}
-		return this.getBounds(parent).left;
 	}
 	private function set_left(to:Float):Float {
 		this.x += to - left;
@@ -66,10 +69,11 @@ class WSprite extends Sprite {
 	public var right(get, set):Float; 
 	private function get_right():Float {
 		if (this.parent == null) {
-			trace("Warning: tried to get .right without parent");
-			return 0;
+			trace("Warning: tried to get .right without parent. Scale discarded.");
+			return this.getBounds(this).right;
+		} else {
+			return this.getBounds(parent).right;
 		}
-		return this.getBounds(parent).right;
 	}
 	private function set_right(to:Float):Float {
 		this.x += to - right;
@@ -101,14 +105,14 @@ class WSprite extends Sprite {
 	
 	public var centerLocation(get, set):Point;
 	private function get_centerLocation():Point {
+		var r:Rectangle;
 		if (this.parent == null) {
-			trace("Warning: tried to get .centerLocation without parent");
-			return new Point(0, 0);
+			trace("Warning: tried to get .centerLocation without parent. Scale discarded.");
+			r = this.getBounds(this);
+		} else {
+			r = this.getBounds(parent);
 		}
-		var r:Rectangle = this.getBounds(parent);
-		var p:Point = new Point((r.width/2) + r.left,
-							    (r.height/2) + r.top);
-		return p;
+		return new Point((this.width/2) + r.left, (this.height/2) + r.top);
 	}
 	private function set_centerLocation(to:Point):Point {
 		var currentCenter = to.subtract(centerLocation);
@@ -380,6 +384,7 @@ class WSprite extends Sprite {
 	 * Removes all references from this class. Suggested you use RemoveAndKill instead though, it's public.
 	 */
 	function kill() {
+		Actuate.stop(this);
 		removeEventListener(TouchEvent.TOUCH_OVER, mouseOverGrow);
 		removeEventListener(TouchEvent.TOUCH_OUT, mouseOverShrink);
 		removeEventListener(MouseEvent.MOUSE_OVER, mouseOverGrow);
@@ -410,10 +415,6 @@ class WSprite extends Sprite {
 	 * Totally expecting you to call this anytime you want to remove the Sprite in your cleanup routines. Feel free to extend!
 	 */
 	public function removeAndKill() {
-		// Let's remove this from it's parent:
-		Actuate.tween(this, 0.1, { }, true); // Workaround actuate bug
-		// TODO: Remove
-		Actuate.stop(this);
 		if (this.parent != null) {
 			this.parent.removeChild(this);
 		}
