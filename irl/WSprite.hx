@@ -111,8 +111,7 @@ class WSprite extends Sprite {
 		return p;
 	}
 	private function set_centerLocation(to:Point):Point {
-		var currentCenter:Point = centerLocation;
-		currentCenter = to.subtract(currentCenter);
+		var currentCenter = to.subtract(centerLocation);
 		this.x += currentCenter.x;
 		this.y += currentCenter.y;
 		return to;
