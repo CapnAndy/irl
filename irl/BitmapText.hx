@@ -45,7 +45,8 @@ class BitmapText extends WSprite {
 		}
 		
 		textField.wordWrap = wordWrap;
-		textField.multiline = true;
+		// TODO: Check for \r too I guess?
+		if (text.indexOf("\n") > -1) textField.multiline = true;
 		// Todo: Detect if the font is embedded or not and toggle this smartly.
 		textField.embedFonts = true;
 		textField.defaultTextFormat = textFormat;
@@ -62,8 +63,7 @@ class BitmapText extends WSprite {
 			textField.autoSize = TextFieldAutoSize.LEFT;
 		}
 					
-		textField.htmlText = text;
-		drawBitmap();
+		this.text = text;
 	}
 	
 	
@@ -94,22 +94,22 @@ class BitmapText extends WSprite {
 			bitmap = null;
 		}
 		
-		var tempSprite:Sprite = new Sprite();
-		tempSprite.addChild(textField);
+		//var tempSprite:Sprite = new Sprite();
+		//tempSprite.addChild(textField);
 		
 		// Need the +2 here for the dropshadow-bitmap
 		// But the +2 is a hack.
 		// TODO: Fix clipping of bitmapData when filters are applied!
-		var data:BitmapData = new BitmapData(Std.int(tempSprite.width + 2), Std.int(tempSprite.height), true, 0x000000);
+		var data:BitmapData = new BitmapData(Std.int(textField.width + 2), Std.int(textField.height), true, 0x000000);
 		bitmap = new Bitmap(data, PixelSnapping.NEVER, true);
 
 		// Get the bounds of the object in case top-left isn't 0,0
-		var bounds:Rectangle = tempSprite.getBounds(tempSprite);
+		var bounds:Rectangle = textField.getBounds(textField);
 			
 		var m:Matrix = new Matrix();
 		m.translate(-bounds.x, -bounds.y);
 		
-		bitmap.bitmapData.draw(tempSprite, m);
+		bitmap.bitmapData.draw(textField, m);
 		addChild(bitmap);
 		bitmap.pixelSnapping = PixelSnapping.NEVER; // I don't think this works.
 		moveBitmap();
