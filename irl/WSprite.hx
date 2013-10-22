@@ -384,7 +384,7 @@ class WSprite extends Sprite {
 	 * Removes all references from this class. Suggested you use RemoveAndKill instead though, it's public.
 	 */
 	function kill() {
-		Actuate.stop(this);
+		Actuate.stop(this, false, false, false);
 		removeEventListener(TouchEvent.TOUCH_OVER, mouseOverGrow);
 		removeEventListener(TouchEvent.TOUCH_OUT, mouseOverShrink);
 		removeEventListener(MouseEvent.MOUSE_OVER, mouseOverGrow);
