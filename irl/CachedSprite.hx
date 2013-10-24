@@ -14,25 +14,15 @@ class CachedSprite extends WSprite {
 	//Declare a static data cache
 	public var clip:Bitmap;
 	public var centered:Bool;
-	public static var globalScaleDefault:Float;
 
 	public function new(filename:String, centered:Bool = false) {
 		super();
 		this.centered = centered;
 		clip = Utils.bitmap(filename);
+		clip.cacheAsBitmap = true;
 		
 		addChild(clip);
-		
-		scaleClipToGlobal();
-	}
-	
-	public function scaleClipToGlobal():Void {
-		if (Math.isNaN(globalScaleDefault) || globalScaleDefault == 0) {
-			globalScaleDefault = 1;
-		} else {
-
-		}
-		scaleClipTo(globalScaleDefault);
+		scaleClipTo(1);
 	}
 	
 	public function scaleClipTo(to:Float):Void {
@@ -44,10 +34,6 @@ class CachedSprite extends WSprite {
 			clip.x = bounds.width / -2;
 			clip.y = bounds.height / -2;
 		}
-	}
-	
-	public static function setGlobalScaleDefault(to:Float):Void {
-		globalScaleDefault = to;
 	}
 	
 	public override function removeAndKill() {
