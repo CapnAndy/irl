@@ -19,7 +19,7 @@ class CachedSprite extends WSprite {
 		super();
 		this.centered = centered;
 		clip = Utils.bitmap(filename);
-		clip.cacheAsBitmap = true;
+		//clip.cacheAsBitmap = true;
 		
 		addChild(clip);
 		scaleClipTo(1);
